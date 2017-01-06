@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Следующие задания требуется воспринимать как ТЗ (Техническое задание)
  * p.s. Разработчик, помни! 
@@ -17,3 +18,69 @@
 
  */
 
+//Создад массив $date 
+$date = array();
+
+echo 'При помощи генератора случайных чисел забиваем массив $date пятью юниксовыми метками:', "\n";
+mt_srand(time()); //the number of seconds from 01.01.2017
+
+$date[] = mt_rand();
+$date[] = mt_rand();
+$date[] = mt_rand();
+$date[] = mt_rand();
+$date[] = mt_rand();
+
+var_dump($date);
+
+//Функция возвращает дату в понятном для человека виде
+function Get_Date_To_Timestamp($item) {
+    return date('Y.m.d', $item);
+}
+
+//Функция возвращает день по линуксовой метке в понятном для человека виде
+function Get_Day_To_Timestamp($item) {
+    return date('N-l', $item);
+}
+
+//Функция возвращает месяц по линуксовой метке в понятном для человека виде
+function Get_Month_To_Timestamp($item) {
+    return date('m-F', $item);
+}
+
+//--------------------------Массив в наглдном виде------------------------------
+echo 'Покажем в наглядном виде:', "\n";
+$print_date = array_map('Get_Date_To_Timestamp', $date);
+var_dump($print_date);
+
+
+
+//Далаем вывод сообщения на экран о том, какой день в массиве наименьший
+$days = array_map('Get_Day_To_Timestamp', $date);
+echo 'Покажем в наглядном виде массив дней:', "\n";
+var_dump($days);
+
+$min_day_timestamp = min($days);
+
+echo "\n", 'Наименьший день в сгенерированном массиве: ' . substr($min_day_timestamp, 2);
+
+
+//Далаем вывод сообщения на экран о том, какой месяц в сгенерированном массиве получился наибольшим
+$month = array_map('Get_Month_To_Timestamp', $date);
+echo "<br><br>", 'Покажем в наглядном виде массив месяцев:';
+var_dump($month);
+
+$max_month_timestamp = max($month);
+
+echo "\n", 'Наибольший месяц в сгенерированном массиве: ' . substr($max_month_timestamp, 3);
+
+echo "<br>", 'Сортируем массив по возрастанию дат:';
+sort($date);
+var_dump($date);
+
+echo 'Присваем последний элемент массива: $selected=';
+$selected = array_pop($date);
+echo date('d.m.y H:i:s',$selected);
+
+//Изменим часовой пояс и проверим дату
+date_default_timezone_set("America/New_York");
+echo "<br>А время в America, New_York:",date('d.m.y H:i:s',$selected);
